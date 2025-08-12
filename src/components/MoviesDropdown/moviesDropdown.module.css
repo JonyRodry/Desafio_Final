@@ -1,0 +1,14 @@
+.menuLinks {
+    text-decoration: none;
+    font-size: 18px;
+    color: white;
+    font-family: system-ui, Avenir, Helvetica, Arial, sans-serif !important;
+    background-color: transparent;
+    border: none;
+}
+
+.menuLinks:hover{
+    color: rgb(247, 247, 92);
+    font-weight: 700;
+    background-color: none !important;
+}

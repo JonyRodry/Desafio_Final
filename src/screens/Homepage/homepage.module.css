@@ -39,9 +39,9 @@
 .btnCTA{
     height: 40px;
     width: 150px;
-    border: 1px solid white;
-    border-radius: 15px;
-    background-color: #6D012B;
+    border: 1px solid white !important;
+    border-radius: 15px !important;
+    background-color: #6D012B !important;
     color: white;
     font-weight: 600;
     cursor: pointer;

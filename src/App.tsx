@@ -1,14 +1,13 @@
 import { Provider } from "react-redux";
-import { BrowserRouter, NavLink, Route, Routes } from "react-router";
-import { Homepage } from "./screens";
+import { BrowserRouter, Route, Routes } from "react-router";
 import { store, persistor } from "./store/store";
-import "./App.css";
-import { Menu } from "./screens/Menu";
-import Box from "@mui/material/Box";
-import { Movies } from "./screens/Movies";
 import { PersistGate } from "redux-persist/integration/react";
+import { Menu } from "./components/Menu";
+import { Homepage, Movies, MovieDetails} from "./screens";
+import Box from "@mui/material/Box";
+import "./App.css";
 import "bootstrap/dist/css/bootstrap.min.css";
-import { MovieDetails } from "./screens/MovieDetails/movieDetails";
+
 
 export const App: React.FC = () => {
   return (
@@ -20,7 +19,7 @@ export const App: React.FC = () => {
             <Box flex={1} p={2} className="content">
               <Routes>
                 <Route path="/" element={<Homepage />} />
-                <Route path="/movies" element={<Movies />} />
+                <Route path="/allMovies" element={<Movies />} />
                 <Route path="/movie/:id" element={<MovieDetails />} />
               </Routes>
             </Box>

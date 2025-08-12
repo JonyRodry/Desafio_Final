@@ -8,13 +8,25 @@ import {
   deleteMovieAction,
   type Movie,
 } from "../../store";
-import styles from "./movies.module.css";
-import { Container, Table, Form, Modal, Button, Col } from "react-bootstrap";
-import Alert from "../Alerts/alerts";
 import { useAlert } from "../../hooks/userAlert";
-import { MoviesCard } from "../MoviesCards/moviesCards";
-import Grid from "@mui/material/Grid";
-import { Paper } from "@mui/material";
+import Alert from "../../components/Alerts/alerts";
+import { MoviesCard } from "../../components/MoviesCards";
+import {
+  Button,
+  Dialog,
+  DialogTitle,
+  DialogContent,
+  DialogActions,
+  TextField,
+  Checkbox,
+  FormControlLabel,
+  FormControl,
+  InputLabel,
+  Select,
+  MenuItem,
+  Typography,
+} from "@mui/material";
+import styles from "./movies.module.css";
 
 export const Movies: React.FC = () => {
   const movies = useSelector((state: StoreState) => state.movies.movies_list);
@@ -27,26 +39,9 @@ export const Movies: React.FC = () => {
   const [genre, setGenre] = useState<string>("");
   const [isEditing, setIsEditing] = useState<boolean>(false);
   const [isChecked, setIsChecked] = useState<boolean>(false);
-  // Pesquisa e filtro por género
   const [searchByChar, setSearchByChar] = useState<string>("");
   const [filterGenre, setFilterGenre] = useState<string>("");
   const [arrayByGenre, setArrayByGenre] = useState<Movie[]>(movies);
-
-  const filtredMovies = (genre: string, search: string) => {
-    let result = movies;
-
-    if (genre) {
-      result = result.filter((m) => m.genre === genre);
-    }
-
-    if (search) {
-      result = result.filter((m) =>
-        m.name.toLowerCase().includes(search.toLowerCase())
-      );
-    }
-
-    setArrayByGenre(result);
-  };
 
   const topGenres = [
     "Ação",
@@ -73,6 +68,22 @@ export const Movies: React.FC = () => {
     localStorage.setItem("moviesLocalStorage", JSON.stringify(movies));
     setArrayByGenre(movies);
   }, [movies]);
+
+  const filtredMovies = (genre: string, search: string) => {
+    let result = movies;
+
+    if (genre) {
+      result = result.filter((m) => m.genre === genre);
+    }
+
+    if (search) {
+      result = result.filter((m) =>
+        m.name.toLowerCase().includes(search.toLowerCase())
+      );
+    }
+
+    setArrayByGenre(result);
+  };
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setIsChecked(e.target.checked);
@@ -230,12 +241,39 @@ export const Movies: React.FC = () => {
 
   return (
     <div className={styles.moviesContainer}>
-      <h1 style={{ margin: "0", marginBottom: "20px" }}>Gestor de Filmes</h1>
+      <h1 style={{ margin: "0", marginBottom: "40px" }}>Gestor de Filmes</h1>
+      <div
+        style={{
+          width: "100%",
+          display: "flex",
+          justifyContent: "flex-end",
+          height: "60px",
+          alignItems: "center",
+          position: "absolute",
+          paddingRight: "10%",
+        }}
+      >
+        <Button
+          className={styles.BtnPosition}
+          onClick={() => setShowModal(true)}
+          variant="contained"
+          color="success"
+          sx={{
+            width: "8%",
+            height: "75%",
+            borderRadius: "20px",
+            fontSize: "clamp(0.6vw, 0.8vw, 1vw)",
+          }}
+        >
+          Add Movie
+        </Button>
+      </div>
       <div className={styles.rowFilters}>
-        <div style={{ width: "50%" }}>
-          <Form.Control
-            type="text"
-            placeholder="Pesquisar por nome..."
+        <div style={{ width: "40%", height: "100%" }}>
+          <TextField
+            label="Pesquisar por nome..."
+            variant="outlined"
+            fullWidth
             value={searchByChar}
             onChange={(e) => {
               const value = e.target.value;
@@ -244,46 +282,69 @@ export const Movies: React.FC = () => {
             }}
           />
         </div>
-        <div style={{ width: "30%" }}>
-          <Form.Select
-            value={filterGenre}
-            onChange={(e) => {
-              const value = e.target.value;
-              setFilterGenre(value);
-              filtredMovies(value, searchByChar);
+        <div style={{ width: "30%", height: "100%" }}>
+          <FormControl
+            fullWidth
+            sx={{
+              height: "100%",
+              display: "flex",
+              justifyContent: "center",
+              alignItems: "center",
             }}
           >
-            <option value="">Todos os géneros</option>
-            {topGenres.map((g, index) => (
-              <option key={index} value={g}>
-                {g}
-              </option>
-            ))}
-          </Form.Select>
+            <InputLabel
+              id="filter-genre-label"
+              sx={{ zIndex: "2", backgroundColor: "rgb(216, 217, 212)" }}
+            >
+              Filtrar por género
+            </InputLabel>
+            <Select
+              labelId="filter-genre-label"
+              value={filterGenre}
+              onChange={(e) => {
+                const value = e.target.value;
+                setFilterGenre(value);
+                filtredMovies(value, searchByChar);
+              }}
+              sx={{ width: "100%" }}
+            >
+              <MenuItem value="">
+                <em>Todos os géneros</em>
+              </MenuItem>
+              {topGenres.map((g, index) => (
+                <MenuItem key={index} value={g}>
+                  {g}
+                </MenuItem>
+              ))}
+            </Select>
+          </FormControl>
         </div>
 
-        <div style={{ width: "10%" }}>
+        <div
+          style={{
+            width: "20%",
+            height: "100%",
+            display: "flex",
+            alignItems: "center",
+          }}
+        >
           <Button
-            variant="secondary"
+            variant="contained"
+            color="info"
             onClick={() => {
               setSearchByChar("");
               setFilterGenre("");
               setArrayByGenre(movies);
             }}
             disabled={!setSearchByChar && !filterGenre}
+            sx={{
+              width: "100%",
+              height: "75%",
+              borderRadius: "20px",
+              fontSize: "clamp(0.6vw, 0.8vw, 1vw)",
+            }}
           >
             Limpar
-          </Button>
-        </div>
-        <div
-          style={{ width: "10%", display: "flex", justifyContent: "flex-end" }}
-        >
-          <Button
-            className={styles.BtnPosition}
-            onClick={() => setShowModal(true)}
-            variant="success"
-          >
-            Add User
           </Button>
         </div>
       </div>
@@ -303,69 +364,61 @@ export const Movies: React.FC = () => {
           </div>
         )}
       </div>
-      <Modal
-        show={showModal}
-        onHide={() => {
+      <Dialog
+        open={showModal}
+        onClose={() => {
           setShowModal(false);
           restart();
         }}
-        size="lg"
+        maxWidth="md"
+        fullWidth
       >
-        <Modal.Header closeButton>
-          <Modal.Title>{isEditing ? "Edit User" : "Create User"}</Modal.Title>
-        </Modal.Header>
-        <Modal.Body>
-          <Form>
-            <Form.Group controlId="formName" className="mb-3">
-              <Form.Label>Nome do filme</Form.Label>
-              <Form.Control
-                placeholder=""
-                type="text"
-                value={name}
-                onChange={(e) => setName(e.target.value)}
-              />
-            </Form.Group>
+        <DialogTitle>
+          {isEditing ? "Editar Filme" : "Adicionar Filme"}
+        </DialogTitle>
+        <DialogContent>
+          <TextField
+            label="Nome do Filme"
+            fullWidth
+            margin="normal"
+            value={name}
+            onChange={(e) => setName(e.target.value)}
+          />
+          <Button variant="contained" component="label">
+            Upload Capa
+            <input hidden type="file" onChange={handleImageChange} />
+          </Button>
+          <FormControl fullWidth margin="normal">
+            <InputLabel id="genre-label">Género</InputLabel>
+            <Select
+              labelId="genre-label"
+              value={genre}
+              onChange={(e) => setGenre(e.target.value)}
+            >
+              <MenuItem value="">
+                <em>Selecione um género</em>
+              </MenuItem>
+              {topGenres.map((g, index) => (
+                <MenuItem key={index} value={g}>
+                  {g}
+                </MenuItem>
+              ))}
+            </Select>
+          </FormControl>
+          <FormControlLabel
+            control={<Checkbox checked={isChecked} onChange={handleChange} />}
+            label="Já viste este filme?"
+          />
 
-            <Form.Group controlId="formImage" className="mb-3">
-              <Form.Label>Capa do filme</Form.Label>
-              <Form.Control
-                type="file"
-                className="form-control"
-                accept="image/*"
-                onChange={handleImageChange}
-              />
-            </Form.Group>
-            <Form.Group controlId="formGenre" className="mb-3">
-              <Form.Label>Género</Form.Label>
-              <Form.Select
-                value={genre}
-                onChange={(e) => setGenre(e.target.value)}
-              >
-                <option value="">Selecione um género</option>
-                {topGenres.map((g, index) => (
-                  <option key={index} value={g}>
-                    {g}
-                  </option>
-                ))}
-              </Form.Select>
-            </Form.Group>
-            <Form.Check
-              type="checkbox"
-              id="custom-checkbox"
-              label="Já viste este filme?"
-              checked={isChecked}
-              onChange={handleChange}
-            />
-
-            <p className="mt-2">
-              Este filme está marcado como: {isChecked ? "VISTO" : "NÃO VISTO"}.
-            </p>
-          </Form>
-        </Modal.Body>
-        <Modal.Footer>
+          <Typography className="mt-2">
+            Este filme está marcado como: {isChecked ? "VISTO" : "NÃO VISTO"}.
+          </Typography>
+        </DialogContent>
+        <DialogActions>
           {isEditing ? (
             <Button
-              variant="success"
+              variant="contained"
+              color="success"
               onClick={() => {
                 if (previewUrl) {
                   handleEditUser(userid, name, previewUrl, genre, isChecked);
@@ -378,7 +431,8 @@ export const Movies: React.FC = () => {
             </Button>
           ) : (
             <Button
-              variant="success"
+              variant="contained"
+              color="success"
               onClick={() => {
                 if (previewUrl) {
                   handleAddUser(name, previewUrl, genre, isChecked);
@@ -390,8 +444,8 @@ export const Movies: React.FC = () => {
               Save new task
             </Button>
           )}
-        </Modal.Footer>
-      </Modal>
+        </DialogActions>
+      </Dialog>
       <Alert />
     </div>
   );

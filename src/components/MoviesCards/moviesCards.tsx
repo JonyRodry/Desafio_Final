@@ -1,15 +1,7 @@
-import * as React from "react";
-import Card from "@mui/material/Card";
-import CardActions from "@mui/material/CardActions";
-import CardContent from "@mui/material/CardContent";
-import CardMedia from "@mui/material/CardMedia";
-import Button from "@mui/material/Button";
-import Typography from "@mui/material/Typography";
-import { type Movie } from "../../store";
-import FormGroup from "@mui/material/FormGroup";
-import FormControlLabel from "@mui/material/FormControlLabel";
-import Checkbox from "@mui/material/Checkbox";
+import React from "react";
 import { Link } from "react-router-dom";
+import { type Movie } from "../../store";
+import {Card, CardActions, CardContent, CardMedia, Button, Typography, FormGroup, FormControlLabel, Checkbox} from "@mui/material";
 
 interface MoviesCardProps {
   selectedMovie: Movie;

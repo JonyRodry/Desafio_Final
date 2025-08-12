@@ -42,7 +42,7 @@ export const MovieDetails: React.FC = () => {
           <strong>Status:</strong> {movie.isWatched ? "Visto" : "Não visto"}
         </p>
       </div>
-      <Button variant="secondary" onClick={() => navigate(-1)}>
+      <Button variant="secondary" onClick={() => navigate('/allMovies')}>
         Voltar
       </Button>
     </div>
