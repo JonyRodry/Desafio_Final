@@ -67,3 +67,43 @@ export default tseslint.config([
   },
 ])
 ```
+
+# ​ Desafio Final
+
+Breve descrição: Projeto frontend desenvolvido com React, TypeScript e Vite com configuração inicial e padrões de lint.
+
+---
+
+##  Tecnologias Utilizadas
+- React (via Vite)
+- TypeScript
+- Material UI
+- HTML & CSS
+
+---
+
+##  Estrutura do Projeto
+```bash
+Desafio_Final/
+├── public/
+├── src/
+├── .gitignore
+├── README.md
+├── eslint.config.js
+├── index.html
+├── package.json
+├── tsconfig.json
+├── tsconfig.app.json
+├── tsconfig.node.json
+└── vite.config.ts
+```
+
+---
+
+## Scripts de instalação e execução 
+git clone https://github.com/JonyRodry/Desafio_Final.git
+cd Desafio_Final
+npm i
+npm run dev
+
+## Desenvolvido por João Rodrigues
