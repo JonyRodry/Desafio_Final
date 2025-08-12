@@ -101,9 +101,9 @@ Desafio_Final/
 ---
 
 ## Scripts de instalação e execução 
-git clone https://github.com/JonyRodry/Desafio_Final.git
-cd Desafio_Final
-npm i
-npm run dev
+- git clone https://github.com/JonyRodry/Desafio_Final.git
+- cd Desafio_Final
+- npm i
+- npm run dev
 
-## Desenvolvido por João Rodrigues
+### Desenvolvido por João Rodrigues
