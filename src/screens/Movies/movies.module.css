@@ -1,0 +1,51 @@
+.moviesContainer {
+    background-image: url(../../assets/greyBG.jpg);
+    background-repeat: no-repeat;
+    background-size: cover;
+    height: 100%;
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 2% 10% 5%;
+}
+
+.userGrid {
+    display: grid;
+    grid-template-columns: repeat(1, 1fr);
+    gap: 16px;
+    margin-top: 20px;
+    width: 100%;
+}
+
+.userCard {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    background-color: #f8f9fa;
+    border: 1px solid #dee2e6;
+    padding: 16px;
+    border-radius: 8px;
+}
+
+.rowFilters{
+    width: 100%;
+    height: 60px;
+    display: flex !important;
+    flex-direction: row !important;
+    justify-content: space-between;
+    align-items: center !important;
+}
+
+@media (min-width: 600px) {
+  .userGrid {
+    grid-template-columns: repeat(2, 1fr); /* 2 colunas a partir de 600px */
+  }
+}
+
+@media (min-width: 900px) {
+  .userGrid {
+    grid-template-columns: repeat(3, 1fr); /* 3 colunas a partir de 900px */
+  }
+}

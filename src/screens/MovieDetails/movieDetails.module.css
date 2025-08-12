@@ -1,0 +1,17 @@
+.movieDetailsContainer {
+    background-image: url(../../assets/greyBG.jpg);
+    background-repeat: no-repeat;
+    background-size: cover;
+    height: 100%;
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 2% 30% 5%;
+}
+
+.imgBanner{
+    width: 100%;
+    height: 500px;
+    object-fit: cover;
+}
